@@ -4,6 +4,8 @@
     <option name="projectPerEditor">
       <map>
         <entry key="T14.MTH.DataGenerator.Desktop/App.axaml" value="T14.MTH.DataGenerator.Desktop/T14.MTH.DataGenerator.Desktop.csproj" />
+        <entry key="T14.MTH.DataGenerator.Desktop/Controls/GroupBox.axaml" value="T14.MTH.DataGenerator.Desktop/T14.MTH.DataGenerator.Desktop.csproj" />
+        <entry key="T14.MTH.DataGenerator.Desktop/Controls/TimeSpanPicker.axaml" value="T14.MTH.DataGenerator.Desktop/T14.MTH.DataGenerator.Desktop.csproj" />
         <entry key="T14.MTH.DataGenerator.Desktop/Styles/Icons.axaml" value="T14.MTH.DataGenerator.Desktop/T14.MTH.DataGenerator.Desktop.csproj" />
         <entry key="T14.MTH.DataGenerator.Desktop/Views/HomeView.axaml" value="T14.MTH.DataGenerator.Desktop/T14.MTH.DataGenerator.Desktop.csproj" />
         <entry key="T14.MTH.DataGenerator.Desktop/Views/MainWindow.axaml" value="T14.MTH.DataGenerator.Desktop/T14.MTH.DataGenerator.Desktop.csproj" />

@@ -1,7 +1,8 @@
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System;
-using T14.MTH.DataGenerator.Desktop.ViewModels;
+using System.Diagnostics;
 
 namespace T14.MTH.DataGenerator.Desktop
 {
@@ -42,13 +43,13 @@ namespace T14.MTH.DataGenerator.Desktop
         }
 
         /// <summary>
-        /// 判断 Data 是否是 ViewModel
+        /// 判断 Data 是否是 ObservableObject
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
         public bool Match(object? data)
         {
-            return data is ViewModelBase;
+            return data is ObservableObject;
         }
     }
 }

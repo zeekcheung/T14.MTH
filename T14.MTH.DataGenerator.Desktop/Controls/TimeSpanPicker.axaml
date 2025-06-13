@@ -1,0 +1,47 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:T14.MTH.DataGenerator.Desktop.Controls">
+    <Design.PreviewWith>
+        <controls:TimeSpanPicker />
+    </Design.PreviewWith>
+
+    <!-- 通过 Style 定义模板控件的结构和样式 -->
+    <Style Selector="controls|TimeSpanPicker">
+        <!-- 通过 Template 定义模板控件的结构 -->
+        <Setter Property="Template">
+            <ControlTemplate>
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel.Styles>
+                        <Style Selector="NumericUpDown:nth-child(n+2)">
+                            <Setter Property="Margin" Value="10,0,0,0" />
+                        </Style>
+                    </StackPanel.Styles>
+                    <NumericUpDown Increment="1"
+                                   Minimum="0"
+                                   Watermark="0"
+                                   ButtonSpinnerLocation="Right"
+                                   ShowButtonSpinner="True"
+                                   AllowSpin="True"
+                                   InnerRightContent="时"
+                                   Value="{TemplateBinding Hours}" />
+                    <NumericUpDown Increment="1"
+                                   Minimum="0"
+                                   Watermark="0"
+                                   ButtonSpinnerLocation="Right"
+                                   ShowButtonSpinner="True"
+                                   AllowSpin="True"
+                                   InnerRightContent="分"
+                                   Value="{TemplateBinding Minutes}" />
+                    <NumericUpDown Increment="1"
+                                   Minimum="0"
+                                   Watermark="0"
+                                   ButtonSpinnerLocation="Right"
+                                   ShowButtonSpinner="True"
+                                   AllowSpin="True"
+                                   InnerRightContent="秒"
+                                   Value="{TemplateBinding Seconds}" />
+                </StackPanel>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+</Styles>

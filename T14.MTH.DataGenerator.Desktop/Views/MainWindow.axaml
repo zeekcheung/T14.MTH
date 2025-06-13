@@ -1,15 +1,18 @@
-<Window x:Class="T14.MTH.DataGenerator.Desktop.Views.MainWindow"
+﻿<Window x:Class="T14.MTH.DataGenerator.Desktop.Views.MainWindow"
         xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="using:T14.MTH.DataGenerator.Desktop.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        Title="T14.MTH.DataGenerator.Desktop"
-        Width="1280"
-        Height="960"
-        d:DesignWidth="1280"
-        d:DesignHeight="960"
+        xmlns:u="https://irihi.tech/ursa"
+        Title="蒸养数据生成器"
+        MinWidth="1300"
+        MinHeight="720"
+        d:DesignWidth="1300"
+        d:DesignHeight="720"
         x:DataType="vm:MainWindowViewModel"
+        WindowStartupLocation="CenterScreen"
+        SystemDecorations="BorderOnly"
         Icon="/Assets/avalonia-logo.ico"
         mc:Ignorable="d">
 
@@ -21,5 +24,48 @@
         <vm:MainWindowViewModel />
     </Design.DataContext>
 
-    <ContentControl Content="{Binding CurrentViewModel}" />
+    <StackPanel>
+        <DockPanel Background="Transparent"
+                   LastChildFill="False"
+                   DoubleTapped="TitleBar_OnDoubleTapped"
+                   PointerPressed="TitleBar_OnPointerPressed">
+            <DockPanel.Styles>
+                <Style Selector="Image, TextBlock">
+                    <Setter Property="VerticalAlignment" Value="Center" />
+                </Style>
+            </DockPanel.Styles>
+            <StackPanel Margin="15,15,0,0" Orientation="Horizontal" DockPanel.Dock="Left">
+                <Image Width="20" Source="/Assets/avalonia-logo.ico" />
+                <TextBlock Margin="5,0,0,0"
+                           Text="蒸养数据生成器"
+                           FontSize="18"
+                           FontWeight="Bold" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
+                <u:IconButton Icon="{StaticResource SemiIconGithubLogo}"
+                              Classes="Tertiary"
+                              Theme="{StaticResource BorderlessIconButton}"
+                              Click="ButtonOpenGithub_OnClick" />
+                <u:ThemeToggleButton Mode="Indicator" />
+                <u:IconButton Icon="{StaticResource SemiIconExpand}"
+                              Classes="Tertiary"
+                              Theme="{StaticResource BorderlessIconButton}"
+                              Click="ButtonFullScreenWindow_OnClick" />
+                <u:IconButton Icon="{StaticResource SemiIconMinus}"
+                              Classes="Tertiary"
+                              Theme="{StaticResource BorderlessIconButton}"
+                              Click="ButtonMinimizeWindow_OnClick" />
+                <u:IconButton Icon="{StaticResource SemiIconMaximize}"
+                              Classes="Tertiary"
+                              Theme="{StaticResource BorderlessIconButton}"
+                              Click="ButtonMaximizeWindow_OnClick" />
+                <u:IconButton Icon="{StaticResource SemiIconClose}"
+                              Classes="Tertiary"
+                              Theme="{StaticResource BorderlessIconButton}"
+                              Click="ButtonCloseWindow_OnClick" />
+            </StackPanel>
+        </DockPanel>
+
+        <ContentControl Content="{Binding CurrentViewModel}" />
+    </StackPanel>
 </Window>

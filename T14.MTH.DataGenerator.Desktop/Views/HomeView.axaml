@@ -4,15 +4,384 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:T14.MTH.DataGenerator.Desktop.ViewModels"
-             d:DesignWidth="800"
-             d:DesignHeight="450"
+             xmlns:controls="using:T14.MTH.DataGenerator.Desktop.Controls"
+             xmlns:u="https://irihi.tech/ursa"
+             d:DesignWidth="1300"
+             d:DesignHeight="720"
              x:DataType="vm:HomeViewModel"
-             Background="#ffffff"
-             Foreground="#000000"
              mc:Ignorable="d">
     <Design.DataContext>
         <vm:HomeViewModel />
     </Design.DataContext>
 
-    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Hello" />
+    <UserControl.DataContext>
+        <vm:HomeViewModel />
+    </UserControl.DataContext>
+
+    <UserControl.Styles>
+        <Style Selector="PathIcon">
+            <Setter Property="Theme" Value="{DynamicResource InnerPathIcon}" />
+        </Style>
+
+        <Style Selector="TextBlock.HEADER">
+            <Setter Property="FontWeight" Value="Bold" />
+        </Style>
+
+        <Style Selector="HeaderedContentControl">
+            <Style Selector="^:nth-child(n+4)">
+                <Setter Property="Margin" Value="0,20,0,0" />
+            </Style>
+
+            <Style Selector="^ WrapPanel">
+                <Setter Property="Margin" Value="0, 10" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+
+                <Style Selector="^ NumericUpDown">
+                    <Setter Property="MinWidth" Value="90" />
+                </Style>
+                <Style Selector="^ &gt; TextBlock, ^ &gt; CheckBox, ^ &gt; HyperlinkButton">
+                    <Setter Property="VerticalAlignment" Value="Center" />
+                </Style>
+            </Style>
+
+            <Style Selector="^ Label">
+                <Setter Property="VerticalAlignment" Value="Center" />
+            </Style>
+
+            <Style Selector="^ CheckBox">
+                <Setter Property="Margin" Value="10,0,0,0" />
+            </Style>
+        </Style>
+    </UserControl.Styles>
+
+    <Grid Margin="20" RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="*,*,*">
+        <HeaderedContentControl Grid.Row="0" Grid.Column="0">
+            <HeaderedContentControl.Header>
+                <StackPanel Orientation="Horizontal">
+                    <PathIcon Data="{StaticResource SemiIconSun}" Foreground="#f15d5d" />
+                    <TextBlock Padding="5,0,0,0" Text="温度参数" Classes="HEADER" />
+                </StackPanel>
+            </HeaderedContentControl.Header>
+
+            <StackPanel>
+                <WrapPanel>
+                    <Label Content="升温时长：" Target="TspIncTem" />
+                    <controls:TimeSpanPicker Name="TspIncTem"
+                                             Hours="{Binding IncTemHours}"
+                                             Minutes="{Binding IncTemMinutes}"
+                                             Seconds="{Binding IncTemSeconds}" />
+                </WrapPanel>
+                <WrapPanel>
+                    <Label Content="恒温时长：" Target="TspConstTem" />
+                    <controls:TimeSpanPicker Name="TspConstTem"
+                                             Hours="{Binding ConstTemHours}"
+                                             Minutes="{Binding ConstTemMinutes}"
+                                             Seconds="{Binding ConstTemSeconds}" />
+                </WrapPanel>
+                <WrapPanel>
+                    <Label Content="降温时长：" Target="TspDecTem" />
+                    <controls:TimeSpanPicker Name="TspDecTem"
+                                             Hours="{Binding DecTemHours}"
+                                             Minutes="{Binding DecTemMinutes}"
+                                             Seconds="{Binding DecTemSeconds}" />
+                </WrapPanel>
+                <WrapPanel>
+                    <Label Content="起始温度：" Target="NudInitTem" />
+                    <NumericUpDown Name="NudInitTem"
+                                   Increment="0.1"
+                                   FormatString="0.0"
+                                   InnerRightContent="°C"
+                                   Watermark="0.0"
+                                   IsReadOnly="{Binding AutoGetTem}"
+                                   Value="{Binding InitTem}" />
+                    <Label Margin="10,0,0,0" Content="最高温度：" Target="NudMaxTem" />
+                    <NumericUpDown Name="NudMaxTem"
+                                   Increment="0.1"
+                                   FormatString="0.0"
+                                   InnerRightContent="°C"
+                                   Watermark="0.0"
+                                   Value="{Binding MaxTem}" />
+                    <CheckBox Content="自动" IsChecked="{Binding AutoGetTem}" />
+                </WrapPanel>
+                <WrapPanel>
+                    <Label Content="温度误差：" Target="NudTemErr" />
+                    <NumericUpDown Name="NudTemErr"
+                                   Increment="0.1"
+                                   FormatString="0.0"
+                                   InnerRightContent="°C"
+                                   Watermark="0.0"
+                                   Value="{Binding TemErr}" />
+                </WrapPanel>
+            </StackPanel>
+        </HeaderedContentControl>
+
+        <HeaderedContentControl Grid.Row="0" Grid.Column="1">
+            <HeaderedContentControl.Header>
+                <StackPanel Orientation="Horizontal">
+                    <PathIcon Data="{StaticResource SemiIconCloud}" Foreground="#3b82f6" />
+                    <TextBlock Padding="5,0,0,0" Text="湿度测点" Classes="HEADER" />
+                </StackPanel>
+            </HeaderedContentControl.Header>
+
+            <StackPanel>
+                <WrapPanel>
+                    <Label Content="增湿时长：" />
+                    <controls:TimeSpanPicker Hours="{Binding IncHumHours}" Minutes="{Binding IncHumMinutes}" Seconds="{Binding IncHumSeconds}" />
+                </WrapPanel>
+                <WrapPanel>
+                    <Label Content="恒湿时长：" />
+                    <controls:TimeSpanPicker Hours="{Binding ConstHumHours}" Minutes="{Binding ConstHumMinutes}" Seconds="{Binding ConstHumSeconds}" />
+                </WrapPanel>
+                <WrapPanel>
+                    <Label Content="降湿时长：" />
+                    <controls:TimeSpanPicker Hours="{Binding DecHumHours}" Minutes="{Binding DecHumMinutes}" Seconds="{Binding DecHumSeconds}" />
+                </WrapPanel>
+                <WrapPanel>
+                    <Label Content="起始湿度：" Target="NudInitHum" />
+                    <NumericUpDown Name="NudInitHum"
+                                   InnerRightContent="%"
+                                   Increment="0.1"
+                                   FormatString="0.0"
+                                   Watermark="0.0"
+                                   IsReadOnly="{Binding AutoGetHum}"
+                                   Value="{Binding InitHum}" />
+                    <Label Margin="10,0,0,0" Content="最高湿度：" Target="NudMaxHum" />
+                    <NumericUpDown Name="NudMaxHum"
+                                   InnerRightContent="%"
+                                   Increment="0.1"
+                                   FormatString="0.0"
+                                   Watermark="0.0"
+                                   Value="{Binding MaxHum}" />
+                    <CheckBox Content="自动" IsChecked="{Binding AutoGetHum}" />
+                </WrapPanel>
+                <WrapPanel>
+                    <Label Content="温度误差：" Target="NudHumErr" />
+                    <NumericUpDown Name="NudHumErr"
+                                   InnerRightContent="%"
+                                   Increment="0.1"
+                                   FormatString="0.0"
+                                   Watermark="0.0"
+                                   Value="{Binding HumErr}" />
+                </WrapPanel>
+            </StackPanel>
+        </HeaderedContentControl>
+
+        <!-- 测点参数 -->
+        <HeaderedContentControl Grid.Row="0" Grid.Column="2">
+            <HeaderedContentControl.Header>
+                <StackPanel Orientation="Horizontal">
+                    <PathIcon Data="{StaticResource SemiIconMapPin}" Foreground="#22c55e" />
+                    <TextBlock Padding="5,0,0,0" Text="测点参数" Classes="HEADER" />
+                </StackPanel>
+            </HeaderedContentControl.Header>
+
+            <StackPanel>
+                <WrapPanel>
+                    <Label Content="开始时间：" Target="DtpStart" />
+                    <u:DateTimePicker Name="DtpStart"
+                                      MinWidth="290"
+                                      DisplayFormat="{Binding DateTimeFormat}"
+                                      SelectedDate="{Binding StartDateTime}" />
+                </WrapPanel>
+                <WrapPanel>
+                    <Label Content="采集间隔：" />
+                    <controls:TimeSpanPicker Hours="{Binding SampIntvHours}" Minutes="{Binding SampIntvMinutes}" Seconds="{Binding SampIntvSeconds}" />
+                </WrapPanel>
+                <WrapPanel>
+                    <Label Content="温度测点：" Target="NudTemNum" />
+                    <NumericUpDown Name="NudTemNum"
+                                   InnerRightContent="个"
+                                   Increment="1"
+                                   Minimum="0"
+                                   Watermark="0"
+                                   Value="{Binding SampTemNum}" />
+                    <Label Margin="40,0,0,0" Content="湿度测点：" Target="NudHumNum" />
+                    <NumericUpDown Name="NudHumNum"
+                                   InnerRightContent="个"
+                                   Increment="1"
+                                   Minimum="0"
+                                   Watermark="0"
+                                   Value="{Binding SampHumNum}" />
+                </WrapPanel>
+                <WrapPanel>
+                    <Label Content="施工部件：" Target="NudAreaNo" />
+                    <NumericUpDown Name="NudAreaNo"
+                                   InnerRightContent="区"
+                                   Increment="1"
+                                   Minimum="0"
+                                   Watermark="0"
+                                   Value="{Binding AreaNo}" />
+                    <NumericUpDown Name="NudLineNum"
+                                   InnerRightContent="线"
+                                   Increment="1"
+                                   Minimum="0"
+                                   Watermark="0"
+                                   Value="{Binding LineNo}" />
+                </WrapPanel>
+                <WrapPanel>
+                    <Label Content="WMO 编号：" Target="TxtWmoNo" />
+                    <TextBox Name="TxtWmoNo"
+                             MinWidth="60"
+                             Text="{Binding WmoNo}"
+                             Watermark="0" />
+                    <HyperlinkButton Margin="10,0,0,0" Classes="OnlyIcon" NavigateUri="https://data.cma.cn/dataService/cdcindex/datacode/A.0012.0001.html" />
+                </WrapPanel>
+            </StackPanel>
+
+        </HeaderedContentControl>
+
+        <!-- 文件参数 -->
+        <HeaderedContentControl Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+            <HeaderedContentControl.Header>
+                <StackPanel Orientation="Horizontal">
+                    <PathIcon Data="{StaticResource SemiIconFile}" Foreground="#eab308" />
+                    <TextBlock Padding="5,0,0,0" Text="文件参数" Classes="HEADER" />
+                </StackPanel>
+            </HeaderedContentControl.Header>
+
+            <StackPanel>
+                <WrapPanel>
+                    <Label Content="文件名称：" Target="TxtFileName" />
+                    <!-- <TextBox Name="TxtFileName" MinWidth="550" Text="{Binding Filename}" /> -->
+                    <u:PathPicker Name="TxtFileName"
+                                  Title="选择文件"
+                                  MinWidth="600"
+                                  AllowMultiple="True"
+                                  SelectedPaths="{Binding SelectedSavePath}"
+                                  SuggestedStartPath="{Binding SuggestSavePath}">
+                        <!-- TODO: 自动绑定文件名 -->
+                        <u:PathPicker.SelectedPathsText>
+                            <MultiBinding StringFormat="{}{0}\{1}区\{2}号线.png" Mode="OneWay">
+                                <Binding Path="SelectedSavePath" />
+                                <Binding Path="AreaNo" />
+                                <Binding Path="LineNo" />
+                            </MultiBinding>
+                        </u:PathPicker.SelectedPathsText>
+                    </u:PathPicker>
+                    <CheckBox Margin="15,0,0,0" Content="自动" IsChecked="{Binding AutoFileName}" />
+                </WrapPanel>
+                <WrapPanel>
+                    <WrapPanel Margin="0">
+                        <Label Content="温度精度：" Target="NudTemPrec" />
+                        <NumericUpDown Name="NudTemPrec"
+                                       Minimum="0"
+                                       InnerRightContent="位小数"
+                                       Increment="1"
+                                       Watermark="0"
+                                       Value="{Binding TemPrec}" />
+                    </WrapPanel>
+                    <WrapPanel Margin="15,0,0,0">
+                        <Label Content="湿度精度：" Target="NudHumPrec" />
+                        <NumericUpDown Name="NudHumPrec"
+                                       InnerRightContent="位小数"
+                                       Minimum="0"
+                                       Increment="1"
+                                       Watermark="0"
+                                       Value="{Binding HumPrec}" />
+                    </WrapPanel>
+                    <WrapPanel Margin="15,0,0,0">
+                        <Label Content="时间格式：" Target="TxtTimeFormat" />
+                        <TextBox Name="TxtTimeFormat"
+                                 MinWidth="150"
+                                 Text="yyyy/M/d H:mm:ss"
+                                 Watermark="yyyy/M/d H:mm:ss" />
+                    </WrapPanel>
+                    <WrapPanel Margin="5,0,0,0">
+                        <CheckBox IsChecked="{Binding ExportAreaLine}" Content="施工部件" />
+                        <CheckBox IsChecked="{Binding ExportSampDate}" Content="测点数据" />
+                    </WrapPanel>
+                </WrapPanel>
+            </StackPanel>
+        </HeaderedContentControl>
+
+        <!-- 操作按钮 -->
+        <HeaderedContentControl Grid.Row="1" Grid.Column="2">
+            <HeaderedContentControl.Header>
+                <StackPanel Orientation="Horizontal">
+                    <PathIcon Data="{StaticResource group_regular}" Foreground="#733ccc" />
+                    <TextBlock Padding="5,0,0,0" Text="操作按钮" Classes="HEADER" />
+                </StackPanel>
+            </HeaderedContentControl.Header>
+
+            <WrapPanel>
+                <Button Classes="Primary">
+                    <WrapPanel>
+                        <PathIcon Data="{StaticResource SemiIconCamera}" />
+                        <TextBlock Text=" 生成图片" />
+                    </WrapPanel>
+                </Button>
+                <Button Classes="Primary">
+                    <WrapPanel>
+                        <PathIcon Data="{StaticResource SemiIconGridRectangle}" />
+                        <TextBlock Text=" 生成表格" />
+                    </WrapPanel>
+                </Button>
+                <Button Classes="Primary">
+                    <WrapPanel>
+                        <PathIcon Data="{StaticResource SemiIconCreditCard}" />
+                        <TextBlock Text=" 生成图表" />
+                    </WrapPanel>
+                </Button>
+                <Button Classes="Primary">
+                    <WrapPanel>
+                        <PathIcon Data="{StaticResource SemiIconCopy}" />
+                        <TextBlock Text=" 批量生成" />
+                    </WrapPanel>
+                </Button>
+                <Button Classes="Primary">
+                    <WrapPanel>
+                        <PathIcon Data="{StaticResource SemiIconUpload}" />
+                        <TextBlock Text=" 上传数据" />
+                    </WrapPanel>
+                </Button>
+                <Button Classes="Primary">
+                    <WrapPanel>
+                        <PathIcon Data="{StaticResource SemiIconImage}" />
+                        <TextBlock Text=" 打开图片" />
+                    </WrapPanel>
+                </Button>
+                <Button Classes="Primary">
+                    <WrapPanel>
+                        <PathIcon Data="{StaticResource SemiIconGridRectangle}" />
+                        <TextBlock Text=" 打开表格" />
+                    </WrapPanel>
+                </Button>
+                <Button Classes="Primary">
+                    <WrapPanel>
+                        <PathIcon Data="{StaticResource SemiIconFolderOpen}" />
+                        <TextBlock Text=" 打开目录" />
+                    </WrapPanel>
+                </Button>
+            </WrapPanel>
+        </HeaderedContentControl>
+
+
+        <!-- 操作日志 -->
+        <HeaderedContentControl Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3">
+            <HeaderedContentControl.Header>
+                <StackPanel Orientation="Horizontal">
+                    <PathIcon Data="{StaticResource SemiIconArticle}" />
+                    <TextBlock Padding="5,0,0,0" Text="操作日志" Classes="HEADER" />
+                </StackPanel>
+            </HeaderedContentControl.Header>
+
+            <DataGrid Height="150"
+                      Margin="0,15,0,0"
+                      AutoGenerateColumns="False"
+                      ItemsSource="{Binding LogList}"
+                      IsReadOnly="True"
+                      CanUserReorderColumns="True"
+                      CanUserResizeColumns="True"
+                      CanUserSortColumns="True"
+                      GridLinesVisibility="All"
+                      BorderThickness="1"
+                      BorderBrush="Gray">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Width="200" Header="时间" Binding="{Binding Time}" />
+                    <DataGridTextColumn Width="100" Header="级别" Binding="{Binding Level}" />
+                    <DataGridTextColumn Width="1000" Header="消息" Binding="{Binding Message}" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </HeaderedContentControl>
+    </Grid>
 </UserControl>

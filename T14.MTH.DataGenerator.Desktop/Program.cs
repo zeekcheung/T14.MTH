@@ -1,5 +1,6 @@
 ﻿using Avalonia;
 using System;
+using Ursa.Controls;
 
 namespace T14.MTH.DataGenerator.Desktop
 {
@@ -20,7 +21,14 @@ namespace T14.MTH.DataGenerator.Desktop
         [STAThread]
         public static void Main(string[] args)
         {
-            BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
+            try
+            {
+                BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
+            }
+            catch (Exception e)
+            {
+                MessageBox.ShowAsync($"An error occurred: {e.Message}", "Error");
+            }
         }
     }
 }

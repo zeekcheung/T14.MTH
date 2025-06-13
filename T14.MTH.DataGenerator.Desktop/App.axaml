@@ -1,6 +1,8 @@
 <Application x:Class="T14.MTH.DataGenerator.Desktop.App"
              xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:semi="https://irihi.tech/semi"
+             xmlns:u-semi="https://irihi.tech/ursa/themes/semi"
              xmlns:local="using:T14.MTH.DataGenerator.Desktop"
              RequestedThemeVariant="Default">
     <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
@@ -11,8 +13,14 @@
     </Application.DataTemplates>
 
     <Application.Styles>
-        <FluentTheme />
+        <!-- <FluentTheme /> -->
+        <!-- Semi.Avalonia 主题 -->
+        <semi:SemiTheme Locale="zh-CN" />
+        <semi:DataGridSemiTheme />
+        <u-semi:SemiTheme Locale="zh-CN" />
         <!-- 引入图标样式 -->
         <StyleInclude Source="/Styles/Icons.axaml" />
+        <!-- 引入自定义模板控件样式 -->
+        <StyleInclude Source="/Controls/TimeSpanPicker.axaml" />
     </Application.Styles>
 </Application>
